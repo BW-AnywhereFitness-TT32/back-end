@@ -1,4 +1,4 @@
-const pgConnection = process.env.DATABASE_URL;
+// const pgConnection = process.env.DATABASE_URL;
 
 module.exports = {
   development: {
@@ -36,7 +36,12 @@ module.exports = {
   },
   production: {
     client: "postgresql",
-    connection: pgConnection,
+    connection: {
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB_NAME,
+    },
     pool: {
       min: 2,
       max: 10,
