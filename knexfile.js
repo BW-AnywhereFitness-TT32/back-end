@@ -36,7 +36,7 @@ module.exports = {
     client: "sqlite3",
     useNullAsDefault: true,
     connection: {
-      filename: "./data/shouts.db3",
+      filename: "./database/anywhere_fitness.db3",
     },
     pool: {
       afterCreate: (conn, done) => {
@@ -44,10 +44,10 @@ module.exports = {
       },
     },
     migrations: {
-      directory: "./data/migrations",
+      directory: "./database/migrations",
     },
     seeds: {
-      directory: "./data/seeds",
+      directory: "./database/seeds",
     },
   },
 };
