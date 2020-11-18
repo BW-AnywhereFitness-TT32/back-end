@@ -1,5 +1,6 @@
 const router = require("express").Router();
 
+const Classes = require("../classes/classes-model");
 const Users = require("./users-model.js");
 const roleChecker = require("../auth/roleChecker");
 
@@ -11,6 +12,14 @@ router.get("/", (req, res) => {
     .catch((err) => res.send(err));
 });
 
+router.get("/current", (req, res) =>
+  res.send({
+    user_id: req.decodedJwt.id,
+    username: req.decodedJwt.username,
+    role_id: req.decodedJwt.role,
+  })
+);
+
 router.get("/roles", (req, res) => {
   Users.fetchRoles()
     .then((users) => {
@@ -21,9 +30,13 @@ router.get("/roles", (req, res) => {
 
 router.get("/:id", (req, res) => {
   const id = req.params.id;
-  Users.findBy({ id })
-    .then((users) => {
-      res.status(200).json(users);
+  Classes.findByUserId(id)
+    .then((classes) => {
+      Users.findById(id)
+        .then((users) => {
+          res.status(200).json({ ...users, classes });
+        })
+        .catch((err) => res.send(err));
     })
     .catch((err) => res.send(err));
 });

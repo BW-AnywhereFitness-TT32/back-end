@@ -4,6 +4,7 @@ const db = require("../database/db-config.js");
 module.exports = {
   find,
   findById,
+  findByUserId,
   add,
   update,
   remove,
@@ -51,6 +52,26 @@ function findById(id) {
     )
     .where({ "c.id": id })
     .first();
+}
+
+function findByUserId(id) {
+  return db("classes as c")
+    .join("class_types as ct", "ct.id", "c.type_id")
+    .join("users as u", "u.id", "c.instructor_id")
+    .join("classes_to_users as ctu", "ctu.class_id", "c.id")
+    .select(
+      "c.id",
+      "c.class_name",
+      "ct.class_type",
+      "u.username as instructor",
+      "c.date",
+      "c.time",
+      "c.duration",
+      "c.intensity",
+      "c.location",
+      "c.capacity"
+    )
+    .where({ "ctu.user_id": id });
 }
 
 async function add(classInfo) {
