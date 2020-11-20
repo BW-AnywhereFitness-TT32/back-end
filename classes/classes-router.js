@@ -48,11 +48,7 @@ router.get("/:id", (req, res) => {
     .then((attendance) => {
       Classes.findById(req.params.id)
         .then((users) => {
-          if (!attending) {
-            res.status(200).json({ ...users });
-          } else {
-            res.status(200).json({ ...users, attending: attendance });
-          }
+          res.status(200).json({ ...users, attending: attendance });
         })
         .catch((err) => res.send(err));
     })
