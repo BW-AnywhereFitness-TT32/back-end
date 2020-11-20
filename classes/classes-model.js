@@ -85,7 +85,15 @@ async function update(id, classInfo) {
 }
 
 async function remove(id) {
-  await db("classes").delete().where({ id });
+  return db("classes_to_users")
+    .delete()
+    .where({ class_id: id })
+    .then(() => {
+      return db("classes").delete().where({ id });
+    })
+    .catch(() => {
+      return db("classes").delete().where({ id });
+    });
 }
 
 function fetchTypes() {
