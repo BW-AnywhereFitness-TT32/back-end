@@ -19,7 +19,7 @@ exports.up = function (knex) {
         .notNullable()
         .references("id")
         .inTable("roles")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE");
     })
     .createTable("classes", (classes) => {
@@ -31,7 +31,7 @@ exports.up = function (knex) {
         .notNullable()
         .references("id")
         .inTable("class_types")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE");
       classes
         .integer("instructor_id")
@@ -39,7 +39,7 @@ exports.up = function (knex) {
         .notNullable()
         .references("id")
         .inTable("users")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE");
       classes.date("date").notNullable();
       classes.time("time").notNullable();
@@ -56,7 +56,7 @@ exports.up = function (knex) {
         .notNullable()
         .references("id")
         .inTable("users")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE");
       ctu
         .integer("class_id")
@@ -64,7 +64,7 @@ exports.up = function (knex) {
         .notNullable()
         .references("id")
         .inTable("classes")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE");
     })
     .createTable("punchcard", (pc) => {
@@ -81,7 +81,7 @@ exports.up = function (knex) {
         .notNullable()
         .references("id")
         .inTable("class_types")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE");
       pc.integer("classes_attended").notNullable().unsigned();
     });
